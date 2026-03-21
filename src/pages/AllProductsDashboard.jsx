@@ -10,7 +10,6 @@ const AllProductsDashboard = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // 🔥 NEW STATES (ONLY ADDITION)
   const [downloading, setDownloading] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [email, setEmail] = useState("");
@@ -20,14 +19,12 @@ const AllProductsDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ GET REAL DATA FROM BACKEND
   useEffect(() => {
     if (location.state && location.state.data) {
       setProducts(location.state.data);
     }
   }, [location.state]);
 
-  // 🔍 SEARCH (ADDED PRODUCT ID SUPPORT)
   const filteredProducts = useMemo(() => {
     const q = search.toLowerCase();
 
@@ -36,7 +33,7 @@ const AllProductsDashboard = () => {
       p.category.toLowerCase().includes(q) ||
       p.status.toLowerCase().includes(q) ||
       p.stock.toString().includes(q) ||
-      p.product_id.toString().includes(q)
+      p.product_id?.toString().includes(q)
     );
   }, [search, products]);
 
@@ -51,7 +48,6 @@ const AllProductsDashboard = () => {
     return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredProducts, currentPage]);
 
-  // 🔥 DOWNLOAD (EXCEL)
   const handleDownload = () => {
     setDownloading(true);
 
@@ -65,27 +61,49 @@ const AllProductsDashboard = () => {
     }, 500);
   };
 
-  // 🔔 REMINDER (SAME AS YOUR OTHER PAGE)
+  // 🔥 FIXED FUNCTION
   const handleCreateReminder = async () => {
     if (!email) return alert("Enter email");
 
     setSavingReminder(true);
 
     try {
-      await fetch(
-        // "http://127.0.0.1:10000/create-stockout-reminders",
+      // ✅ Convert stock (days) → stockout_date
+      const formattedProducts = products.map((p) => {
+        const today = new Date();
+
+        const stockoutDate = new Date(today);
+        stockoutDate.setDate(today.getDate() + (p.stock || 0));
+
+        return {
+          product_name: p.product_name,
+          stockout_date: stockoutDate.toISOString().split("T")[0]
+        };
+      });
+
+      console.log("📤 Sending to backend:", formattedProducts);
+
+      const res = await fetch(
         "http://127.0.0.1:5000/create-stockout-reminders",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, results: products }),
+          body: JSON.stringify({
+            email,
+            results: formattedProducts
+          }),
         }
       );
+
+      const data = await res.json();
+      console.log("✅ Backend response:", data);
 
       setShowReminderModal(false);
       setShowSuccessPopup(true);
       setTimeout(() => setShowSuccessPopup(false), 2500);
-    } catch {
+
+    } catch (err) {
+      console.error("❌ Error:", err);
       alert("Error");
     } finally {
       setSavingReminder(false);
@@ -95,10 +113,8 @@ const AllProductsDashboard = () => {
   return (
     <div className="min-h-screen bg-black text-white p-8 mt-16">
 
-      {/* 🔥 HEADER (ONLY ADDITIONS HERE) */}
       <div className="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
 
-        {/* ✅ BACK BUTTON */}
         <button
           onClick={() => navigate("/analysis")}
           className="px-4 py-2 bg-zinc-800 rounded hover:bg-zinc-700"
@@ -110,7 +126,6 @@ const AllProductsDashboard = () => {
           🟡 Product Dashboard
         </h1>
 
-        {/* 🔍 SEARCH */}
         <div className="flex items-center bg-zinc-900 border border-yellow-400 px-3 py-2 rounded-lg">
           <Search size={18} />
           <input
@@ -122,7 +137,6 @@ const AllProductsDashboard = () => {
           />
         </div>
 
-        {/* 🔥 ACTION BUTTONS */}
         <div className="flex gap-3">
           <button
             onClick={() => setShowReminderModal(true)}
@@ -141,11 +155,19 @@ const AllProductsDashboard = () => {
 
       </div>
 
-      {/* GRID (UNCHANGED) */}
+      {/* GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
         {paginatedData.map((product) => (
-          <div key={product.product_id} className="bg-zinc-900 border border-yellow-400 p-5 rounded-xl">
+          <div
+            key={product.product_id}
+            onClick={() =>
+              navigate("/dashboard", {
+                state: { product_id: product.product_id }
+              })
+            }
+            className="bg-zinc-900 border border-yellow-400 p-5 rounded-xl cursor-pointer hover:scale-105 transition"
+          >
 
             <h2 className="text-yellow-300 font-bold">
               {product.product_name}
@@ -174,7 +196,6 @@ const AllProductsDashboard = () => {
 
       </div>
 
-      {/* PAGINATION (UNCHANGED) */}
       <div className="flex justify-center mt-10 gap-2">
         <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}>
           Prev
@@ -187,7 +208,6 @@ const AllProductsDashboard = () => {
         </button>
       </div>
 
-      {/* ✅ SUCCESS POPUP */}
       {showSuccessPopup && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2">
           <div className="bg-zinc-900 px-6 py-3 rounded text-yellow-400">
@@ -196,7 +216,6 @@ const AllProductsDashboard = () => {
         </div>
       )}
 
-      {/* 🔔 MODAL */}
       {showReminderModal && (
         <div className="fixed inset-0 bg-black/70 flex justify-center items-center">
 

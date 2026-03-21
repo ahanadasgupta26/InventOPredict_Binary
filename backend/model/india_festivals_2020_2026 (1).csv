@@ -1,0 +1,399 @@
+Date,Festival_Name,Source
+2021-01-01,New Year's Day,India_Public
+2021-01-13,Lohri,India_Public
+2021-01-14,Pongal,India_Public
+2021-01-14,Makar Sankranti,India_Public
+2021-01-20,Guru Govind Singh Jayanti,India_Public
+2021-01-26,Republic Day,India_Public
+2021-02-16,Vasant Panchami,India_Public
+2021-02-19,Shivaji Jayanti,India_Public
+2021-02-26,Hazarat Ali's Birthday,India_Public
+2021-02-27,Guru Ravidas Jayanti,India_Public
+2021-03-08,Maharishi Dayanand Saraswati Jayanti,India_Public
+2021-03-11,Isra and Mi'raj,Islamic_Festivals
+2021-03-11,Maha Shivaratri,India_Public
+2021-03-28,Holika Dahana,India_Public
+2021-03-28,Dolyatra,India_Public
+2021-03-29,Holi,India_Public
+2021-04-02,Good Friday,India_Public
+2021-04-04,Easter Day,India_Public
+2021-04-13,Chaitra Sukhladi,India_Public
+2021-04-13,Gudi Padwa,India_Public
+2021-04-13,Ramadan Starts,Islamic_Festivals
+2021-04-13,Ugadi,India_Public
+2021-04-14,Ambedkar Jayanti,India_Public
+2021-04-14,Vaisakhi,India_Public
+2021-04-14,Mesadi,India_Public
+2021-04-15,Bahag Bihu,India_Public
+2021-04-21,Rama Navami,India_Public
+2021-04-25,Mahavir Jayanti,India_Public
+2021-05-07,Jamat Ul-Vida,India_Public
+2021-05-08,Lailat al-Qadr,Islamic_Festivals
+2021-05-09,Birthday of Rabindranath,India_Public
+2021-05-13,Eid al-Fitr,Islamic_Festivals
+2021-05-14,Ramzan Id,India_Public
+2021-05-26,Buddha Purnima,India_Public
+2021-07-12,Rath Yatra,India_Public
+2021-07-20,Eid al-Adha,Islamic_Festivals
+2021-07-21,Bakrid,India_Public
+2021-08-10,Muharram,Islamic_Festivals
+2021-08-15,Independence Day,India_Public
+2021-08-16,Parsi New Year,India_Public
+2021-08-19,Ashura,Islamic_Festivals
+2021-08-20,Muharram/Ashura,India_Public
+2021-08-21,Onam,India_Public
+2021-08-22,Raksha Bandhan,India_Public
+2021-08-30,Janmashtami (Smarta),India_Public
+2021-08-30,Janmashtami,India_Public
+2021-09-10,Ganesh Chaturthi,India_Public
+2021-10-02,Mahatma Gandhi Jayanti,India_Public
+2021-10-07,First Day of Sharad Navratri,India_Public
+2021-10-11,First Day of Durga Puja Festivities,India_Public
+2021-10-12,Maha Saptami,India_Public
+2021-10-13,Maha Ashtami,India_Public
+2021-10-14,Maha Navami,India_Public
+2021-10-15,Dussehra,India_Public
+2021-10-19,Milad un-Nabi,India_Public
+2021-10-19,The Prophet's Birthday,Islamic_Festivals
+2021-10-20,Maharishi Valmiki Jayanti,India_Public
+2021-10-24,Karaka Chaturthi,India_Public
+2021-11-04,Diwali/Deepavali,India_Public
+2021-11-04,Naraka Chaturdasi,India_Public
+2021-11-05,Govardhan Puja,India_Public
+2021-11-06,Bhai Duj,India_Public
+2021-11-10,Chhat Puja (Pratihar Sashthi/Surya Sashthi),India_Public
+2021-11-19,Guru Nanak Jayanti,India_Public
+2021-11-24,Guru Tegh Bahadur's Martyrdom Day,India_Public
+2021-12-24,Christmas Eve,India_Public
+2021-12-25,Christmas,India_Public
+2022-01-01,New Year's Day,India_Public
+2022-01-09,Guru Govind Singh Jayanti,India_Public
+2022-01-13,Lohri,India_Public
+2022-01-14,Makar Sankranti,India_Public
+2022-01-14,Pongal,India_Public
+2022-01-26,Republic Day,India_Public
+2022-02-05,Vasant Panchami,India_Public
+2022-02-15,Hazarat Ali's Birthday,India_Public
+2022-02-16,Guru Ravidas Jayanti,India_Public
+2022-02-19,Shivaji Jayanti,India_Public
+2022-02-26,Maharishi Dayanand Saraswati Jayanti,India_Public
+2022-03-01,Isra and Mi'raj,Islamic_Festivals
+2022-03-01,Maha Shivaratri,India_Public
+2022-03-17,Holika Dahana,India_Public
+2022-03-18,Holi,India_Public
+2022-03-18,Dolyatra,India_Public
+2022-04-02,Chaitra Sukhladi,India_Public
+2022-04-02,Ugadi,India_Public
+2022-04-02,Gudi Padwa,India_Public
+2022-04-03,Ramadan Starts,Islamic_Festivals
+2022-04-10,Rama Navami,India_Public
+2022-04-14,Ambedkar Jayanti,India_Public
+2022-04-14,Mesadi,India_Public
+2022-04-14,Mahavir Jayanti,India_Public
+2022-04-14,Vaisakhi,India_Public
+2022-04-15,Good Friday,India_Public
+2022-04-17,Easter Day,India_Public
+2022-04-28,Lailat al-Qadr,Islamic_Festivals
+2022-04-29,Jamat Ul-Vida,India_Public
+2022-05-02,Eid al-Fitr,Islamic_Festivals
+2022-05-03,Ramzan Id,India_Public
+2022-05-09,Birthday of Rabindranath,India_Public
+2022-05-16,Buddha Purnima,India_Public
+2022-07-01,Rath Yatra,India_Public
+2022-07-09,Eid al-Adha,Islamic_Festivals
+2022-07-10,Bakrid,India_Public
+2022-07-30,Muharram,Islamic_Festivals
+2022-08-08,Ashura,Islamic_Festivals
+2022-08-09,Muharram/Ashura,India_Public
+2022-08-11,Raksha Bandhan,India_Public
+2022-08-15,Independence Day,India_Public
+2022-08-16,Parsi New Year,India_Public
+2022-08-18,Janmashtami (Smarta),India_Public
+2022-08-19,Janmashtami,India_Public
+2022-08-31,Ganesh Chaturthi,India_Public
+2022-09-08,Onam,India_Public
+2022-09-26,First Day of Sharad Navratri,India_Public
+2022-10-01,First Day of Durga Puja Festivities,India_Public
+2022-10-02,Mahatma Gandhi Jayanti,India_Public
+2022-10-02,Maha Saptami,India_Public
+2022-10-03,Maha Ashtami,India_Public
+2022-10-04,Maha Navami,India_Public
+2022-10-05,Dussehra,India_Public
+2022-10-08,The Prophet's Birthday,Islamic_Festivals
+2022-10-09,Maharishi Valmiki Jayanti,India_Public
+2022-10-09,Milad un-Nabi,India_Public
+2022-10-13,Karaka Chaturthi,India_Public
+2022-10-24,Naraka Chaturdasi,India_Public
+2022-10-24,Diwali/Deepavali,India_Public
+2022-10-25,Govardhan Puja,India_Public
+2022-10-26,Bhai Duj,India_Public
+2022-10-30,Chhat Puja (Pratihar Sashthi/Surya Sashthi),India_Public
+2022-11-08,Guru Nanak Jayanti,India_Public
+2022-11-24,Guru Tegh Bahadur's Martyrdom Day,India_Public
+2022-12-24,Christmas Eve,India_Public
+2022-12-25,Christmas,India_Public
+2022-12-29,Guru Govind Singh Jayanti,India_Public
+2023-01-01,New Year's Day,India_Public
+2023-01-14,Makar Sankranti,India_Public
+2023-01-15,Pongal,India_Public
+2023-01-26,Republic Day,India_Public
+2023-01-26,Vasant Panchami,India_Public
+2023-02-05,Hazarat Ali's Birthday,India_Public
+2023-02-05,Guru Ravidas Jayanti,India_Public
+2023-02-15,Maharishi Dayanand Saraswati Jayanti,India_Public
+2023-02-18,Maha Shivaratri,India_Public
+2023-02-18,Isra and Mi'raj,Islamic_Festivals
+2023-02-19,Shivaji Jayanti,India_Public
+2023-03-07,Dolyatra,India_Public
+2023-03-07,Holika Dahana,India_Public
+2023-03-08,Holi,India_Public
+2023-03-22,Gudi Padwa,India_Public
+2023-03-22,Chaitra Sukhladi,India_Public
+2023-03-22,Ugadi,India_Public
+2023-03-23,Ramadan Starts,Islamic_Festivals
+2023-03-24,Ramadan Start,India_Public
+2023-03-30,Rama Navami,India_Public
+2023-04-04,Mahavir Jayanti,India_Public
+2023-04-07,Good Friday,India_Public
+2023-04-09,Easter Day,India_Public
+2023-04-14,Ambedkar Jayanti,India_Public
+2023-04-14,Vaisakhi,India_Public
+2023-04-15,Mesadi,India_Public
+2023-04-17,Lailat al-Qadr,Islamic_Festivals
+2023-04-21,Eid al-Fitr,Islamic_Festivals
+2023-04-21,Jamat Ul-Vida,India_Public
+2023-04-22,Ramzan Id,India_Public
+2023-05-05,Buddha Purnima,India_Public
+2023-05-09,Birthday of Rabindranath,India_Public
+2023-06-20,Rath Yatra,India_Public
+2023-06-28,Eid al-Adha,Islamic_Festivals
+2023-06-29,Bakrid,India_Public
+2023-07-19,Muharram,Islamic_Festivals
+2023-07-28,Ashura,Islamic_Festivals
+2023-07-29,Muharram/Ashura,India_Public
+2023-08-15,Independence Day,India_Public
+2023-08-16,Parsi New Year,India_Public
+2023-08-20,Vinayaka Chathurthi,India_Public
+2023-08-29,Onam,India_Public
+2023-08-30,Raksha Bandhan,India_Public
+2023-09-06,Janmashtami (Smarta),India_Public
+2023-09-07,Janmashtami,India_Public
+2023-09-19,Ganesh Chaturthi,India_Public
+2023-09-27,The Prophet's Birthday,Islamic_Festivals
+2023-09-28,Milad un-Nabi,India_Public
+2023-10-02,Mahatma Gandhi Jayanti,India_Public
+2023-10-15,First Day of Sharad Navratri,India_Public
+2023-10-20,First Day of Durga Puja Festivities,India_Public
+2023-10-21,Maha Saptami,India_Public
+2023-10-22,Maha Ashtami,India_Public
+2023-10-23,Maha Navami,India_Public
+2023-10-24,Dussehra,India_Public
+2023-10-28,Maharishi Valmiki Jayanti,India_Public
+2023-11-01,Karaka Chaturthi,India_Public
+2023-11-12,Naraka Chaturdasi,India_Public
+2023-11-12,Diwali/Deepavali,India_Public
+2023-11-13,Govardhan Puja,India_Public
+2023-11-15,Bhai Duj,India_Public
+2023-11-19,Chhat Puja (Pratihar Sashthi/Surya Sashthi),India_Public
+2023-11-24,Guru Tegh Bahadur's Martyrdom Day,India_Public
+2023-11-27,Guru Nanak Jayanti,India_Public
+2023-12-24,Christmas Eve,India_Public
+2023-12-25,Christmas,India_Public
+2024-01-01,New Year's Day,India_Public
+2024-01-13,Lohri,India_Public
+2024-01-14,Makar Sankranti,India_Public
+2024-01-15,Pongal,India_Public
+2024-01-17,Guru Govind Singh Jayanti,India_Public
+2024-01-25,Hazarat Ali's Birthday,India_Public
+2024-01-26,Republic Day,India_Public
+2024-02-08,Isra and Mi'raj,Islamic_Festivals
+2024-02-14,Vasant Panchami,India_Public
+2024-02-19,Shivaji Jayanti,India_Public
+2024-02-24,Guru Ravidas Jayanti,India_Public
+2024-03-06,Maharishi Dayanand Saraswati Jayanti,India_Public
+2024-03-08,Maha Shivaratri,India_Public
+2024-03-12,Ramadan Starts,Islamic_Festivals
+2024-03-12,Ramadan Start,India_Public
+2024-03-24,Holika Dahana,India_Public
+2024-03-25,Holi,India_Public
+2024-03-25,Dolyatra,India_Public
+2024-03-29,Good Friday,India_Public
+2024-03-31,Easter Day,India_Public
+2024-04-05,Lailat al-Qadr,Islamic_Festivals
+2024-04-05,Jamat Ul-Vida,India_Public
+2024-04-09,Ugadi,India_Public
+2024-04-09,Gudi Padwa,India_Public
+2024-04-09,Chaitra Sukhladi,India_Public
+2024-04-10,Eid al-Fitr,Islamic_Festivals
+2024-04-11,Ramzan Id,India_Public
+2024-04-13,Vaisakhi,India_Public
+2024-04-14,Ambedkar Jayanti,India_Public
+2024-04-14,Mesadi,India_Public
+2024-04-17,Rama Navami,India_Public
+2024-04-21,Mahavir Jayanti,India_Public
+2024-05-08,Birthday of Rabindranath,India_Public
+2024-05-23,Buddha Purnima,India_Public
+2024-06-17,Bakrid,India_Public
+2024-06-17,Eid al-Adha,Islamic_Festivals
+2024-07-07,Muharram,Islamic_Festivals
+2024-07-07,Rath Yatra,India_Public
+2024-07-17,Muharram/Ashura,India_Public
+2024-07-17,Ashura,Islamic_Festivals
+2024-08-15,Parsi New Year,India_Public
+2024-08-15,Independence Day,India_Public
+2024-08-19,Raksha Bandhan,India_Public
+2024-08-26,Janmashtami (Smarta),India_Public
+2024-08-26,Janmashtami,India_Public
+2024-09-07,Ganesh Chaturthi,India_Public
+2024-09-15,Onam,India_Public
+2024-09-16,Milad un-Nabi,India_Public
+2024-09-16,The Prophet's Birthday,Islamic_Festivals
+2024-10-02,Mahatma Gandhi Jayanti,India_Public
+2024-10-03,First Day of Sharad Navratri,India_Public
+2024-10-09,First Day of Durga Puja Festivities,India_Public
+2024-10-10,Maha Saptami,India_Public
+2024-10-11,Maha Navami,India_Public
+2024-10-11,Maha Ashtami,India_Public
+2024-10-12,Dussehra,India_Public
+2024-10-17,Maharishi Valmiki Jayanti,India_Public
+2024-10-20,Karaka Chaturthi,India_Public
+2024-10-31,Diwali/Deepavali,India_Public
+2024-10-31,Naraka Chaturdasi,India_Public
+2024-11-02,Govardhan Puja,India_Public
+2024-11-03,Bhai Duj,India_Public
+2024-11-07,Chhat Puja (Pratihar Sashthi/Surya Sashthi),India_Public
+2024-11-15,Guru Nanak Jayanti,India_Public
+2024-11-24,Guru Tegh Bahadur's Martyrdom Day,India_Public
+2024-12-24,Christmas Eve,India_Public
+2024-12-25,Christmas,India_Public
+2025-01-01,New Year's Day,India_Public
+2025-01-06,Guru Govind Singh Jayanti,India_Public
+2025-01-14,Hazarat Ali's Birthday,India_Public
+2025-01-14,Makar Sankranti,India_Public
+2025-01-14,Pongal,India_Public
+2025-01-26,Republic Day,India_Public
+2025-01-28,Isra and Mi'raj,Islamic_Festivals
+2025-02-02,Vasant Panchami,India_Public
+2025-02-12,Guru Ravidas Jayanti,India_Public
+2025-02-19,Shivaji Jayanti,India_Public
+2025-02-23,Maharishi Dayanand Saraswati Jayanti,India_Public
+2025-02-26,Maha Shivaratri,India_Public
+2025-03-01,Ramadan Starts,Islamic_Festivals
+2025-03-02,Ramadan Start,India_Public
+2025-03-13,Holika Dahana,India_Public
+2025-03-14,Dolyatra,India_Public
+2025-03-14,Holi,India_Public
+2025-03-26,Lailat al-Qadr,Islamic_Festivals
+2025-03-28,Jamat Ul-Vida,India_Public
+2025-03-30,Gudi Padwa,India_Public
+2025-03-30,Eid al-Fitr,Islamic_Festivals
+2025-03-30,Ugadi,India_Public
+2025-03-30,Chaitra Sukhladi,India_Public
+2025-03-31,Ramzan Id,India_Public
+2025-03-31,Eid al-Fitr,Islamic_Festivals
+2025-04-06,Rama Navami,India_Public
+2025-04-10,Mahavir Jayanti,India_Public
+2025-04-13,Vaisakhi,India_Public
+2025-04-14,Ambedkar Jayanti,India_Public
+2025-04-14,Mesadi,India_Public
+2025-04-15,Bahag Bihu,India_Public
+2025-04-18,Good Friday,India_Public
+2025-04-20,Easter Day,India_Public
+2025-05-09,Birthday of Rabindranath,India_Public
+2025-05-12,Buddha Purnima,India_Public
+2025-06-06,Eid al-Adha,Islamic_Festivals
+2025-06-07,Bakrid,India_Public
+2025-06-27,Muharram,Islamic_Festivals
+2025-06-27,Rath Yatra,India_Public
+2025-07-06,Ashura,Islamic_Festivals
+2025-07-06,Muharram/Ashura,India_Public
+2025-08-09,Raksha Bandhan,India_Public
+2025-08-15,Independence Day,India_Public
+2025-08-15,Janmashtami (Smarta),India_Public
+2025-08-15,Parsi New Year,India_Public
+2025-08-16,Janmashtami,India_Public
+2025-08-27,Ganesh Chaturthi,India_Public
+2025-09-05,Milad un-Nabi,India_Public
+2025-09-05,Onam,India_Public
+2025-09-05,The Prophet's Birthday,Islamic_Festivals
+2025-09-22,First Day of Sharad Navratri,India_Public
+2025-09-28,First Day of Durga Puja Festivities,India_Public
+2025-09-29,Maha Saptami,India_Public
+2025-09-30,Maha Ashtami,India_Public
+2025-10-01,Maha Navami,India_Public
+2025-10-02,Mahatma Gandhi Jayanti,India_Public
+2025-10-02,Dussehra,India_Public
+2025-10-07,Maharishi Valmiki Jayanti,India_Public
+2025-10-10,Karaka Chaturthi,India_Public
+2025-10-20,Diwali/Deepavali,India_Public
+2025-10-20,Naraka Chaturdasi,India_Public
+2025-10-22,Govardhan Puja,India_Public
+2025-10-23,Bhai Duj,India_Public
+2025-10-28,Chhat Puja (Pratihar Sashthi/Surya Sashthi),India_Public
+2025-11-05,Guru Nanak Jayanti,India_Public
+2025-11-24,Guru Tegh Bahadur's Martyrdom Day,India_Public
+2025-12-24,Christmas Eve,India_Public
+2025-12-25,Christmas,India_Public
+2026-01-01,New Year's Day,India_Public
+2026-01-03,Hazarat Ali's Birthday,India_Public
+2026-01-14,Pongal,India_Public
+2026-01-14,Makar Sankranti,India_Public
+2026-01-16,Isra and Mi'raj,Islamic_Festivals
+2026-01-23,Vasant Panchami,India_Public
+2026-01-26,Republic Day,India_Public
+2026-02-01,Guru Ravidas Jayanti,India_Public
+2026-02-12,Maharishi Dayanand Saraswati Jayanti,India_Public
+2026-02-15,Maha Shivaratri,India_Public
+2026-02-18,Ramadan Starts,Islamic_Festivals
+2026-02-19,Shivaji Jayanti,India_Public
+2026-02-19,Ramadan Start,India_Public
+2026-03-03,Holika Dahana,India_Public
+2026-03-04,Holi,India_Public
+2026-03-15,Lailat al-Qadr,Islamic_Festivals
+2026-03-19,Gudi Padwa,India_Public
+2026-03-19,Ugadi,India_Public
+2026-03-20,Eid al-Fitr (tentative),Islamic_Festivals
+2026-03-20,Jamat Ul-Vida,India_Public
+2026-03-21,Ramzan Id (tentative),India_Public
+2026-03-26,Rama Navami,India_Public
+2026-03-31,Mahavir Jayanti,India_Public
+2026-04-03,Good Friday,India_Public
+2026-04-05,Easter Day,India_Public
+2026-04-14,Ambedkar Jayanti,India_Public
+2026-04-14,Vaisakhi,India_Public
+2026-04-14,Mesadi,India_Public
+2026-04-15,Bahag Bihu,India_Public
+2026-05-01,Buddha Purnima,India_Public
+2026-05-09,Birthday of Rabindranath,India_Public
+2026-05-27,Bakrid (tentative),India_Public
+2026-05-27,Eid al-Adha (tentative),Islamic_Festivals
+2026-06-17,Muharram (tentative),Islamic_Festivals
+2026-06-26,Muharram/Ashura (tentative),India_Public
+2026-06-26,Ashura (tentative),Islamic_Festivals
+2026-07-16,Rath Yatra,India_Public
+2026-08-15,Independence Day,India_Public
+2026-08-26,Onam,India_Public
+2026-08-26,The Prophet's Birthday (tentative),Islamic_Festivals
+2026-08-26,Milad un-Nabi (tentative),India_Public
+2026-08-28,Raksha Bandhan,India_Public
+2026-09-04,Janmashtami (Smarta),India_Public
+2026-09-04,Janmashtami,India_Public
+2026-09-14,Ganesh Chaturthi,India_Public
+2026-10-02,Mahatma Gandhi Jayanti,India_Public
+2026-10-11,First Day of Sharad Navratri,India_Public
+2026-10-17,First Day of Durga Puja Festivities,India_Public
+2026-10-18,Maha Saptami,India_Public
+2026-10-19,Maha Ashtami,India_Public
+2026-10-20,Dussehra,India_Public
+2026-10-26,Maharishi Valmiki Jayanti,India_Public
+2026-10-29,Karaka Chaturthi,India_Public
+2026-11-08,Naraka Chaturdasi,India_Public
+2026-11-08,Diwali/Deepavali,India_Public
+2026-11-09,Govardhan Puja,India_Public
+2026-11-11,Bhai Duj,India_Public
+2026-11-15,Chhat Puja (Pratihar Sashthi/Surya Sashthi),India_Public
+2026-11-24,Guru Nanak Jayanti,India_Public
+2026-11-24,Guru Tegh Bahadur's Martyrdom Day,India_Public
+2026-12-23,Hazarat Ali's Birthday,India_Public
+2026-12-24,Christmas Eve,India_Public
+2026-12-25,Christmas,India_Public
