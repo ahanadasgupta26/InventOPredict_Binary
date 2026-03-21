@@ -9,6 +9,8 @@ const Feedback = () => {
     experience: "",
   });
 
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // ✅ added
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -24,9 +26,18 @@ const Feedback = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
-      alert(data.message);
+
+      // ✅ SHOW POPUP
+      setShowSuccessPopup(true);
+
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+      }, 2000);
+
       setFormData({ name: "", email: "", phone: "", experience: "" });
+
     } catch (err) {
       console.error("Error submitting feedback:", err);
       alert("Failed to send feedback");
@@ -114,8 +125,18 @@ const Feedback = () => {
                         flex justify-center items-center p-4">
           <FeedbackSide />
         </div>
-
       </div>
+
+      {/* ✅ SUCCESS POPUP */}
+      {showSuccessPopup && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50">
+          <div className="bg-zinc-900 border border-yellow-400/20 px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 animate-fadeIn">
+            <span className="text-yellow-400 text-xl">✔</span>
+            <p className="text-white font-semibold">Feedback Sent Successfully</p>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
