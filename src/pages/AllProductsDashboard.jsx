@@ -196,19 +196,27 @@ const AllProductsDashboard = () => {
       </div>
 
       {/* PAGINATION (UNCHANGED) */}
-      <div className="flex justify-center mt-10 gap-2">
-        <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}>
-          Prev
+      <div className="flex justify-center items-center mt-10 gap-4">
+        <button
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          className="px-5 py-2 rounded-lg bg-yellow-400 text-black font-semibold 
+               hover:bg-yellow-300 hover:scale-105 active:scale-95 
+               transition-all duration-200 shadow-md"
+        >
+          ← Prev
         </button>
 
-        <span>
+        <span className="px-4 py-2 rounded-md bg-zinc-900 border border-yellow-400 text-yellow-400 font-semibold">
           {currentPage} / {totalPages}
         </span>
 
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+          className="px-5 py-2 rounded-lg bg-yellow-400 text-black font-semibold 
+               hover:bg-yellow-300 hover:scale-105 active:scale-95 
+               transition-all duration-200 shadow-md"
         >
-          Next
+          Next →
         </button>
       </div>
 
