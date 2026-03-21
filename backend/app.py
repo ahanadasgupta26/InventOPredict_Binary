@@ -171,7 +171,7 @@ def create_stockout_reminders():
             continue
 
     db.session.commit()
-    check_and_send_reminders()
+    # check_and_send_reminders()
     # 🔔 IMMEDIATE CONFIRMATION EMAIL
     product_list = "\n".join(saved_products)
 
@@ -768,16 +768,18 @@ Please take urgent action.
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
+# scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
 
-scheduler.add_job(
-    check_and_send_reminders,
-    tigger="cron",
-     hour=9,
-     minute=0
- )
+# scheduler.add_job(
+#     check_and_send_reminders,
+#     trigger="cron",
+#     hour=9,
+#     minute=0
+# )
 
-scheduler.start()
+# scheduler.start()
+
+
 
 
 def clear_stockout_reminders():
@@ -793,5 +795,8 @@ def clear_reminders_route():
     return "Reminders cleared"
 # http://127.0.0.1:5000/clear-reminders(clear the table)
 # ---------------- Run App ----------------
+# if __name__ == '__main__':
+#     port = int(os.environ.get("PORT", 10000))
+#     app.run(host="0.0.0.0", port=port)
 if __name__ == '__main__':
     app.run(debug=True)

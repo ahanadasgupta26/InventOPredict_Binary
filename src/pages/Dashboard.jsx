@@ -24,8 +24,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!productId) return;
 
-    // fetch(`https://inventopredict-diversion.onrender.com/product-dashboard/${productId}`)
-       fetch(`http://127.0.0.1:5000/product-dashboard/${productId}`)
+    fetch(`http://127.0.0.1:5000/product-dashboard/${productId}`)
       .then((res) => res.json())
       .then((data) => {
         setDashboardData(data);

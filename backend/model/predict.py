@@ -2,69 +2,69 @@ import os
 import joblib
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 from .pipeline import build_pipeline
 
 BASE_DIR = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(BASE_DIR, "demand_model.pkl")
-
-if not os.path.exists(MODEL_PATH):
-    raise FileNotFoundError("Model file not found. Train the model first.")
 
 model = joblib.load(MODEL_PATH)
 
 
 def predict_stockout(input_file):
 
-    # Run updated pipeline
-    pipeline_output = build_pipeline(input_file)
+    data = build_pipeline(input_file)
 
-    # Use only aggregated features for prediction
-    final_df = pipeline_output["aggregated"]
+    df = data["model_df"]
+    stock_df = data["stock"]
 
-    features = [
-        "avg_daily_sales",
-        "sales_volatility",
-        "festival_score",
-        "festival_electronics_boost",
-        "net_stock"
-    ]
+    results = []
 
-    # Ensure required features exist
-    for col in features:
-        if col not in final_df.columns:
-            raise ValueError(f"Missing required column: {col}")
+    for product_id in df["product_id"].unique():
 
-    # Prepare feature matrix
-    X_new = final_df[features].fillna(0)
+        product_df = df[df["product_id"] == product_id].sort_values("order_date")
 
-    if X_new.empty:
-        raise ValueError("No data available for prediction.")
+        if len(product_df) < 10:
+            continue
 
-    # Model prediction
-    predicted_30_day_demand = model.predict(X_new)
+        current = product_df.iloc[-1:].copy()
 
-    # Convert to daily demand (minimum safeguard)
-    predicted_daily_demand = predicted_30_day_demand / 30
-    predicted_daily_demand = np.maximum(predicted_daily_demand, 0.1)
+        future_demand = 0
 
-    # Calculate stockout days
-    stockout_days = final_df["net_stock"] / predicted_daily_demand
-    stockout_days = stockout_days.clip(lower=0).astype(int)
+        for _ in range(30):
 
-    # Calculate stockout date
-    predicted_stockout_date = (
-        pd.Timestamp(datetime.today().date()) +
-        pd.to_timedelta(stockout_days, unit="D")
-    )
+            X = current[[
+                "lag_1", "lag_7", "rolling_mean_7",
+                "rolling_std_7", "festival_score",
+                "day_of_week", "month", "is_spike"
+            ]]
 
-    # Final result
-    result = pd.DataFrame({
-        "product_id": final_df["product_id"],
-        "product_name": final_df["product_name"],
-        "category": final_df["category"],
-        "days_left": stockout_days,
-        "stockout_date": predicted_stockout_date.astype(str)
-    })
+            pred = max(model.predict(X)[0], 0)
+            future_demand += pred
 
-    return result
+            # update lag
+            current["lag_1"] = pred
+
+        # ---------- Stock ----------
+        stock_row = stock_df[stock_df["product_id"] == product_id]
+
+        stock = stock_row["net_stock"].values[0] if not stock_row.empty else 0
+
+        daily_demand = future_demand / 30 if future_demand > 0 else 0.1
+
+        days_left = int(stock / daily_demand)
+
+        stockout_date = datetime.today().date() + timedelta(days=days_left)
+
+        product_name = product_df["product_name"].iloc[-1]
+        category = product_df["category"].iloc[-1]
+
+        results.append({
+            "product_id": product_id,
+            "product_name": product_name,
+            "category": category,
+            "days_left": days_left,
+            "stockout_date": str(stockout_date)
+        })
+
+    return pd.DataFrame(results)
