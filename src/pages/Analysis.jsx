@@ -164,7 +164,7 @@ const Analysis = () => {
               className="bg-yellow-400 text-black px-12 py-4 rounded-xl text-xl font-semibold 
               hover:bg-yellow-300 transition shadow-lg hover:shadow-yellow-400/50"
             >
-              🚀 Analyze
+               Analyze
             </button>
           </div>
         )}
