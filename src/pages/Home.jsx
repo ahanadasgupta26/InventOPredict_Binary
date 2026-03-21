@@ -50,7 +50,7 @@ const Home = () => {
             <Link to="/analysis">
               <button className="px-8 py-4 bg-yellow-400 text-black text-lg font-semibold rounded-xl 
               hover:bg-yellow-300 transition shadow-lg hover:shadow-yellow-400/50">
-                🚀 Try Now
+                 Try Now
               </button>
             </Link>
           </div>
@@ -74,7 +74,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
 
           <h2 className="text-4xl font-extrabold text-yellow-400 text-center mb-16">
-            ⚡ How It Works
+             How It Works
           </h2>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">

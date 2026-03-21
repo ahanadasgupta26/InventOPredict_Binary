@@ -48,7 +48,7 @@ const Features = () => {
     <section className="space-y-14">
 
       <h2 className="text-4xl font-extrabold text-center text-yellow-400">
-        🚀 Our Features
+         Our Features
       </h2>
 
       <div className="flex justify-center gap-10 flex-wrap">

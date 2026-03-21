@@ -92,7 +92,7 @@ const Analysis = () => {
 
         {/* Title */}
         <h1 className="text-4xl font-extrabold text-center text-yellow-400 mb-10">
-          📊 Stockout Analysis
+           Stockout Analysis
         </h1>
 
         {/* Upload Area */}

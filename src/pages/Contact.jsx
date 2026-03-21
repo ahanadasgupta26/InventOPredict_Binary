@@ -94,7 +94,7 @@ const Contact = () => {
             className="w-full bg-yellow-400 text-black py-4 rounded-xl text-lg font-semibold 
             hover:bg-yellow-300 transition shadow-lg hover:shadow-yellow-400/50"
           >
-            🚀 Send Message
+             Send Message
           </button>
         </form>
       </div>

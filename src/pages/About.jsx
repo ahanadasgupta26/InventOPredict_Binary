@@ -40,7 +40,7 @@ const About = () => {
 
           <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
             We are continuously improving our models to deliver better accuracy. 
-            Your feedback helps us grow 🚀
+            Your feedback helps us grow 
           </p>
 
         </div>
