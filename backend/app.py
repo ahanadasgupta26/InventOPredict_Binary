@@ -596,20 +596,110 @@ def test_email():
 # ---------------- Chatbot Route ----------------
 @app.route('/chat', methods=['POST'])
 def chat():
+    import os
+    import sqlite3
+    import requests
+
     data = request.get_json()
     message = data.get('message', '')
     context = data.get('context', '')
 
-    try:
-        model = genai.GenerativeModel("gemini-3-flash-preview")
-        prompt = f"{context}\n\nUser: {message}\nAI:"
-        response = model.generate_content(prompt)
-        reply = response.text
-    except Exception as e:
-        print("Gemini error:", str(e))
-        reply = "⚠️ Chat service temporarily unavailable. Please try again later."
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    DB_PATH = os.path.join(BASE_DIR, "instance", "site.db")
+    OPENROUTER_API_KEY = os.getenv("OPENROUTE_API")
 
-    return jsonify({"reply": reply})
+    try:
+        # ===============================
+        # 🔥 STEP 1: CALL OPENROUTER
+        # ===============================
+        prompt = f"{context}\n\nUser: {message}\nSQL:"
+
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "mistralai/mistral-7b-instruct",
+                "messages": [
+                    {"role": "user", "content": prompt}
+                ]
+            }
+        )
+
+        # ❌ API ERROR HANDLE
+        if response.status_code != 200:
+            print("API ERROR:", response.text)
+            return jsonify({"reply": "API Error"})
+
+        result_json = response.json()
+        print("FULL RESPONSE:", result_json)
+
+        # ===============================
+        # 🔥 STEP 2: EXTRACT SQL SAFELY
+        # ===============================
+        sql_query = result_json.get("choices", [{}])[0].get("message", {}).get("content", "")
+
+        if not sql_query:
+            return jsonify({"reply": "Failed to generate SQL"})
+
+        # CLEAN SQL
+        sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
+
+        # 🔥 extract only SELECT part
+        if "select" in sql_query.lower():
+            sql_query = sql_query[sql_query.lower().find("select"):]
+
+        print("SQL QUERY:", sql_query)
+
+        # ===============================
+        # 🔥 SAFETY CHECK
+        # ===============================
+        if "select" not in sql_query.lower():
+            return jsonify({"reply": "Invalid query"})
+
+        # Always limit results
+        if "limit" not in sql_query.lower():
+            sql_query += " LIMIT 1"
+
+        # ===============================
+        # 🔥 STEP 3: EXECUTE SQL
+        # ===============================
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+
+        conn.close()
+
+        if not rows:
+            return jsonify({"reply": []})
+
+        # ===============================
+        # 🔥 STEP 4: CLEAN RESULT (NO DUPLICATES)
+        # ===============================
+        seen = set()
+        clean_result = []
+
+        for row in rows:
+            obj = {columns[i]: row[i] for i in range(len(columns))}
+
+            key = (obj.get("product_name"), obj.get("stockout_date"))
+            if key not in seen:
+                seen.add(key)
+                clean_result.append(obj)
+
+        # ===============================
+        # 🔥 FINAL RESPONSE
+        # ===============================
+        return jsonify({"reply": clean_result})
+
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"reply": f"Error: {str(e)}"})
 
 
 
