@@ -594,6 +594,14 @@ def test_email():
     return "Email sent"
 
 # ---------------- Chatbot Route ----------------
+import os
+import sqlite3
+from flask import request, jsonify
+import google.generativeai as genai
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "instance", "site.db")
+
 @app.route('/chat', methods=['POST'])
 def chat():
     import os
@@ -604,6 +612,7 @@ def chat():
     message = data.get('message', '')
     context = data.get('context', '')
 
+<<<<<<< Updated upstream
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DB_PATH = os.path.join(BASE_DIR, "instance", "site.db")
     OPENROUTER_API_KEY = os.getenv("OPENROUTE_API")
@@ -666,6 +675,22 @@ def chat():
         # ===============================
         # 🔥 STEP 3: EXECUTE SQL
         # ===============================
+=======
+    try:
+        # 🔥 STEP 1: Generate SQL
+        model = genai.GenerativeModel("gemini-3-flash-preview")
+        prompt = f"{context}\n\nUser: {message}\nSQL:"
+        response = model.generate_content(prompt)
+
+        sql_query = response.text.strip().replace("```sql", "").replace("```", "")
+
+        print("Generated SQL:", sql_query)
+
+        # 🔥 SAFETY: ensure LIMIT exists
+        if "limit" not in sql_query.lower():
+            sql_query += " LIMIT 1"
+
+>>>>>>> Stashed changes
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
@@ -678,6 +703,7 @@ def chat():
         if not rows:
             return jsonify({"reply": []})
 
+<<<<<<< Updated upstream
         # ===============================
         # 🔥 STEP 4: CLEAN RESULT (NO DUPLICATES)
         # ===============================
@@ -696,6 +722,22 @@ def chat():
         # 🔥 FINAL RESPONSE
         # ===============================
         return jsonify({"reply": clean_result})
+=======
+        # 🔥 REMOVE DUPLICATES (IMPORTANT FIX)
+        seen = set()
+        result = []
+
+        for row in rows:
+            obj = {columns[i]: row[i] for i in range(len(columns))}
+            
+            key = (obj.get("product_name"), obj.get("stockout_date"))
+            if key not in seen:
+                seen.add(key)
+                result.append(obj)
+
+        # 🔥 ONLY RETURN CLEAN DATA
+        return jsonify({"reply": result})
+>>>>>>> Stashed changes
 
     except Exception as e:
         print("ERROR:", str(e))

@@ -173,7 +173,7 @@ const AllProductsDashboard = () => {
             <p className="text-gray-400 text-sm">{product.category}</p>
 
             <div className="mt-3 flex justify-between">
-              <span>Days left to stockout:</span>
+              <span>Stock Left:</span>
               <span>{product.stock}</span>
             </div>
 
