@@ -24,7 +24,7 @@ A: SELECT product_name, stockout_date FROM stockout_reminder ORDER BY stockout_d
 
 Q: details of brown bread
 A: SELECT product_name, stockout_date FROM stockout_reminder WHERE LOWER(product_name) LIKE '%brown bread%' LIMIT 1;
-
+if any question is not related to the table, reply with "INVALID"
 
 🚫 IMPORTANT:
 - ALWAYS return ONLY product_name + stockout_date

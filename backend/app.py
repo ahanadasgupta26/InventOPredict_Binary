@@ -619,7 +619,7 @@ def chat():
 
         prompt = f"{context}\n\nUser: {message}\nSQL:"
         response = model.generate_content(prompt)
-
+        
         sql_query = response.text.strip()
 
         # ✅ CLEAN SQL
@@ -647,7 +647,7 @@ def chat():
         # 🔒 SAFETY CHECK
         # ===============================
         if not sql_query.lower().startswith("select"):
-            return jsonify({"reply": "⚠️ Invalid query"})
+            return jsonify({"reply": "⚠️ Invalid query2"})
 
         # ❌ DO NOT FORCE LIMIT (IMPORTANT FIX)
 

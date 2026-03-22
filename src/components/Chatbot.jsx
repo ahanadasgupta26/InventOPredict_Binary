@@ -14,9 +14,7 @@ const ChatBot = () => {
   // ✅ Predefined UI prompts
   const quickPrompts = [
     "Which product will stockout first?",
-    "Which product will stockout last?",
-    
-    "Details of brown bread"
+    "Which product will stockout last?"
   ];
 
   // Close chatbot when clicking outside
