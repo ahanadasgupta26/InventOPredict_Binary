@@ -14,9 +14,7 @@ const ChatBot = () => {
   // ✅ Predefined UI prompts
   const quickPrompts = [
     "Which product will stockout first?",
-    "Which product will stockout last?",
-    "Show top 3 products with earliest stockout",
-    "Show top 3 products with latest stockout"
+    "Which product will stockout last?"
   ];
 
   // Close chatbot when clicking outside
@@ -56,7 +54,9 @@ const ChatBot = () => {
       const data = await res.json();
       setTyping(false);
 
+      // ✅ HANDLE ARRAY RESPONSE (DB DATA)
       if (Array.isArray(data.reply)) {
+
         if (data.reply.length === 0) {
           setMessages((prev) => [
             ...prev,
@@ -67,10 +67,14 @@ const ChatBot = () => {
 
         let formatted = "";
 
+        // ✅ SINGLE RESULT
         if (data.reply.length === 1) {
           const item = data.reply[0];
           formatted = `📦 ${item.product_name}\n📅 Stockout Date: ${item.stockout_date}`;
-        } else {
+        }
+
+        // ✅ MULTIPLE RESULTS (FIXED)
+        else {
           formatted = data.reply
             .map((item, index) => {
               return `${index + 1}. 📦 ${item.product_name}\n   📅 ${item.stockout_date}`;
@@ -82,7 +86,10 @@ const ChatBot = () => {
           ...prev,
           { text: formatted, sender: "bot" },
         ]);
-      } else {
+      }
+
+      // ✅ HANDLE INVALID / ERROR
+      else {
         setMessages((prev) => [
           ...prev,
           { text: data.reply, sender: "bot" },
@@ -144,7 +151,7 @@ const ChatBot = () => {
             {/* Messages */}
             <div className="flex-grow p-3 overflow-y-auto space-y-2">
 
-              {/* ✅ SHOW QUICK UI WHEN EMPTY */}
+              {/* ✅ QUICK PROMPTS UI */}
               {messages.length === 0 && !typing && (
                 <div className="space-y-2">
                   <p className="text-gray-500 text-sm">Try asking:</p>
@@ -176,6 +183,7 @@ const ChatBot = () => {
                 </div>
               ))}
 
+              {/* Typing */}
               {typing && (
                 <div className="mr-auto bg-gray-200 text-gray-800 p-2 rounded-xl text-sm italic">
                   Assistant is typing...
