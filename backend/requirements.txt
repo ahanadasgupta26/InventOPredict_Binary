@@ -26,6 +26,4 @@ APScheduler==3.10.4
 
 # Production Server
 gunicorn==21.2.0
-
-pip install --upgrade pip setuptools wheel
 scikit-learn==1.2.2
