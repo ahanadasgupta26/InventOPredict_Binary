@@ -69,7 +69,7 @@ const AnalysisResult = () => {
     try {
       await fetch(
         // "https://inventopredict-diversion.onrender.com/create-stockout-reminders",
-        "http://127.0.0.1:5000/create-stockout-reminders",
+        "https://inventopredict-binary.onrender.com/create-stockout-reminders",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

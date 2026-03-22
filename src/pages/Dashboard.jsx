@@ -23,7 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!productId) return;
 
-    fetch(`http://127.0.0.1:5000/product-dashboard/${productId}`)
+    fetch(`https://inventopredict-binary.onrender.com/product-dashboard/${productId}`)
       .then((res) => res.json())
       .then((data) => {
         setDashboardData(data);

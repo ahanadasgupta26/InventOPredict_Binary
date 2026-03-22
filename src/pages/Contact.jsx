@@ -14,7 +14,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:5000/Contact",
+        "https://inventopredict-binary.onrender.com/Contact",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
