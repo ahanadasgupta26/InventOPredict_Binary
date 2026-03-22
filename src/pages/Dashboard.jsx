@@ -42,23 +42,99 @@ const Dashboard = () => {
       .catch(() => setLoading(false));
   }, [productId]);
 
-  // 📅 FILTER BY YEAR
+  // 📅 GET ALL DATA FROM SELECTED YEAR
   const yearFilteredData = useMemo(() => {
-    if (!dashboardData?.historical_data || !selectedYear) return [];
-    return dashboardData.historical_data.filter(
-      (d) => new Date(d.date).getFullYear() === selectedYear
+    if (!dashboardData?.historical_data) return [];
+    
+    // ✅ FILTER BY SELECTED YEAR - GET ALL DATA FROM YEAR BEGINNING
+    const yearData = dashboardData.historical_data.filter(item => {
+      const itemYear = new Date(item.date).getFullYear();
+      return itemYear === selectedYear;
+    });
+    
+    // Sort by date (from Jan 1 onwards)
+    const sorted = [...yearData].sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
     );
+    
+    console.log("🔍 DEBUG - Year filter:", selectedYear);
+    console.log("🔍 DEBUG - Total year data count:", sorted.length);
+    console.log("🔍 DEBUG - First date:", sorted[0]?.date);
+    console.log("🔍 DEBUG - Last date:", sorted[sorted.length - 1]?.date);
+    return sorted;
   }, [dashboardData, selectedYear]);
 
-  // 📊 MOVING AVG
-  const enrichedData = useMemo(() => {
-    return yearFilteredData.map((item, index, arr) => {
+  // 📊 MOVING AVG + PRODUCT-SPECIFIC GROWTH PREDICTION
+  const enrichedDataWithPredictions = useMemo(() => {
+    if (!yearFilteredData || yearFilteredData.length === 0) return [];
+
+    // ✅ SORT BY DATE ASCENDING (oldest → newest, Feb 20 → Mar 21)
+    const ordered = [...yearFilteredData].sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    // Add moving average to historical data
+    const historicalEnriched = ordered.map((item, index, arr) => {
       const slice = arr.slice(Math.max(0, index - 6), index + 1);
       const avg =
         slice.reduce((sum, d) => sum + d.quantity, 0) / slice.length;
-      return { ...item, movingAvg: Number(avg.toFixed(2)) };
-    });
+      return {
+        ...item,
+        movingAvg: Number(avg.toFixed(2)),
+        isHistorical: true,
+      };
+    }); // ✅ NO REVERSE: Display in chronological order
+
+    // Compute average daily growth rate using last 14 days of percentage change
+    const dailyChanges = [];
+    for (let i = 1; i < ordered.length; i++) {
+      const prev = ordered[i - 1].quantity;
+      const current = ordered[i].quantity;
+      if (prev > 0) {
+        dailyChanges.push((current - prev) / prev);
+      }
+    }
+
+    const recentChanges = dailyChanges.slice(-14);
+    const avgDailyGrowth =
+      recentChanges.length > 0
+        ? recentChanges.reduce((acc, v) => acc + v, 0) / recentChanges.length
+        : 0;
+
+    // Prevent wild huge jumps
+    const cappedGrowth = Math.max(-0.2, Math.min(avgDailyGrowth, 0.2));
+
+    // 🔮 FORECAST FOR NEXT 30 DAYS BASED ON PRODUCT GROWTH
+    const lastDate = new Date(ordered[ordered.length - 1].date);
+    let nextValue = ordered[ordered.length - 1].quantity;
+    const predictions = [];
+
+    for (let i = 1; i <= 30; i++) {
+      const futureDate = new Date(lastDate);
+      futureDate.setDate(futureDate.getDate() + i);
+
+      nextValue = Math.max(0.1, nextValue * (1 + cappedGrowth));
+
+      predictions.push({
+        date: futureDate.toISOString().split("T")[0],
+        quantity: null,
+        predictedQuantity: Number(nextValue.toFixed(2)),
+        movingAvg: null,
+        isHistorical: false,
+        isPrediction: true,
+      });
+    }
+
+    return [...historicalEnriched, ...predictions];
   }, [yearFilteredData]);
+
+  const enrichedData = useMemo(() => {
+    return enrichedDataWithPredictions.map(item => ({
+      ...item,
+      // For chart display, show historical quantity or predicted quantity
+      displayQuantity: item.isHistorical ? item.quantity : item.predictedQuantity
+    }));
+  }, [enrichedDataWithPredictions]);
 
   // 📊 SALES
   const yearSales = useMemo(() => {
@@ -267,21 +343,99 @@ const Dashboard = () => {
         <button onClick={() => setSelectedYear(p => p + 1)} className="px-4 py-2 bg-zinc-800 rounded">→</button>
       </div>
 
-      {/* CHART */}
-      <div className="max-w-7xl mx-auto bg-zinc-900 p-6 rounded-xl">
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={enrichedData}>
-            <CartesianGrid stroke="#333" />
-            <XAxis dataKey="date" stroke="#aaa" />
-            <YAxis stroke="#aaa" />
-            <Tooltip />
+      {/* TWO GRAPHS SIDE BY SIDE */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        
+        {/* LEFT: HISTORICAL ANALYSIS - CURRENT YEAR */}
+        <div className="bg-zinc-900 p-6 rounded-xl">
+          <h3 className="text-yellow-400 font-bold mb-4"> {selectedYear}- Previous Sales Analysis</h3>
+          <ResponsiveContainer width="100%" height={350}>
+            <LineChart data={enrichedData.filter(d => d.isHistorical)}>
+              <CartesianGrid stroke="#333" />
+              <XAxis dataKey="date" stroke="#aaa" angle={-45} height={80} />
+              <YAxis stroke="#aaa" />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #facc15'
+                }}
+                formatter={(value, name) => {
+                  if (name === 'quantity') return [value, '📊 Sales'];
+                  if (name === 'movingAvg') return [value, '📈 Trend'];
+                  return value;
+                }}
+              />
 
-            <ReferenceLine x={predictedStockout} stroke="#facc15" />
+              {/* Historical Data */}
+              <Line 
+                dataKey="quantity" 
+                stroke="#facc15" 
+                strokeWidth={3} 
+                dot={false}
+                name="Daily Sales"
+              />
+            </LineChart>
+          </ResponsiveContainer>
 
-            <Line dataKey="quantity" stroke="#facc15" strokeWidth={3} dot={false} />
-            <Line dataKey="movingAvg" stroke="#22c55e" strokeDasharray="5 5" />
-          </LineChart>
-        </ResponsiveContainer>
+          {/* Legend */}
+          <div className="mt-4 flex gap-6 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="h-1 w-4 bg-yellow-400"></div>
+              <span>Daily Sales</span>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT: NEXT 30 DAYS FORECAST (PURELY PREDICTIONS) */}
+        <div className="bg-zinc-900 p-6 rounded-xl">
+          <h3 className="text-blue-400 font-bold mb-4"> Coming 30 Days Trend Analysis</h3>
+          <ResponsiveContainer width="100%" height={350}>
+            <LineChart data={enrichedData.filter(d => d.isPrediction)} margin={{ top: 10, right: 20, bottom: 45, left: 20 }}>
+              <CartesianGrid stroke="#333" />
+              <XAxis
+                dataKey="date"
+                tick={false}
+                axisLine={true}
+                tickLine={false}
+                label={{ value: 'Date', position: 'bottom', offset: 15, fill: '#aaa' }}
+              />
+              <YAxis
+                tick={false}
+                axisLine={true}
+                tickLine={false}
+                label={{ value: 'Forecasted Sales', angle: -90, position: 'insideLeft', fill: '#aaa', dx: -10 }}
+              />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #3b82f6'
+                }}
+                formatter={(value, name) => {
+                  if (name === 'predictedQuantity') return [value, '🔮 Predicted'];
+                  return value;
+                }}
+              />
+
+              {/* Predictions ONLY */}
+              <Line 
+                dataKey="predictedQuantity" 
+                stroke="#3b82f6" 
+                strokeWidth={3}
+                dot={false}
+                name="AI Forecast"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+
+          {/* Legend */}
+          <div className="mt-4 flex gap-6 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="h-1 w-4 bg-blue-500"></div>
+              <span>30-Day AI Forecast</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

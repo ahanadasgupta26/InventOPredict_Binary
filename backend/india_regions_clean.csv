@@ -1,0 +1,30 @@
+Region,State,Zone
+North,Delhi,North
+North,Punjab,North
+North,Haryana,North
+North,Himachal Pradesh,North
+North,Uttarakhand,North
+North,Jammu and Kashmir,North
+North,Ladakh,North
+South,Tamil Nadu,South
+South,Kerala,South
+South,Karnataka,South
+South,Andhra Pradesh,South
+South,Telangana,South
+East,West Bengal,East
+East,Odisha,East
+East,Bihar,East
+East,Jharkhand,East
+West,Maharashtra,West
+West,Gujarat,West
+West,Rajasthan,West
+West,Goa,West
+Central,Madhya Pradesh,Central
+Central,Chhattisgarh,Central
+North-East,Assam,North-East
+North-East,Arunachal Pradesh,North-East
+North-East,Manipur,North-East
+North-East,Meghalaya,North-East
+North-East,Mizoram,North-East
+North-East,Nagaland,North-East
+North-East,Tripura,North-East
