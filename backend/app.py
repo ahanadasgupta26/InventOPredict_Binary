@@ -599,98 +599,56 @@ import sqlite3
 from flask import request, jsonify
 import google.generativeai as genai
 
+# ✅ CONFIG
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "instance", "site.db")
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    import os
-    import sqlite3
-    import requests
-
     data = request.get_json()
     message = data.get('message', '')
     context = data.get('context', '')
 
-<<<<<<< Updated upstream
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DB_PATH = os.path.join(BASE_DIR, "instance", "site.db")
-    OPENROUTER_API_KEY = os.getenv("OPENROUTE_API")
-
     try:
         # ===============================
-        # 🔥 STEP 1: CALL OPENROUTER
+        # 🔥 STEP 1: GENERATE SQL (GEMINI)
         # ===============================
+        model = genai.GenerativeModel("gemini-3-flash-preview")
+
         prompt = f"{context}\n\nUser: {message}\nSQL:"
+        response = model.generate_content(prompt)
 
-        response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": "mistralai/mistral-7b-instruct",
-                "messages": [
-                    {"role": "user", "content": prompt}
-                ]
-            }
-        )
+        sql_query = response.text.strip()
 
-        # ❌ API ERROR HANDLE
-        if response.status_code != 200:
-            print("API ERROR:", response.text)
-            return jsonify({"reply": "API Error"})
-
-        result_json = response.json()
-        print("FULL RESPONSE:", result_json)
-
-        # ===============================
-        # 🔥 STEP 2: EXTRACT SQL SAFELY
-        # ===============================
-        sql_query = result_json.get("choices", [{}])[0].get("message", {}).get("content", "")
-
-        if not sql_query:
-            return jsonify({"reply": "Failed to generate SQL"})
-
-        # CLEAN SQL
+        # ✅ CLEAN SQL
         sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
 
-        # 🔥 extract only SELECT part
+        # ✅ KEEP ONLY SELECT
         if "select" in sql_query.lower():
             sql_query = sql_query[sql_query.lower().find("select"):]
 
-        print("SQL QUERY:", sql_query)
+        print("FINAL SQL:", sql_query)
 
         # ===============================
         # 🔥 SAFETY CHECK
         # ===============================
-        if "select" not in sql_query.lower():
-            return jsonify({"reply": "Invalid query"})
-
-        # Always limit results
-        if "limit" not in sql_query.lower():
-            sql_query += " LIMIT 1"
+        if not sql_query.lower().startswith("select"):
+            return jsonify({"reply": "⚠️ Invalid query"})
 
         # ===============================
-        # 🔥 STEP 3: EXECUTE SQL
+        # 🔥 SMART LIMIT
         # ===============================
-=======
-    try:
-        # 🔥 STEP 1: Generate SQL
-        model = genai.GenerativeModel("gemini-3-flash-preview")
-        prompt = f"{context}\n\nUser: {message}\nSQL:"
-        response = model.generate_content(prompt)
-
-        sql_query = response.text.strip().replace("```sql", "").replace("```", "")
-
-        print("Generated SQL:", sql_query)
-
-        # 🔥 SAFETY: ensure LIMIT exists
         if "limit" not in sql_query.lower():
-            sql_query += " LIMIT 1"
+            if "order by" in sql_query.lower():
+                sql_query += " LIMIT 5"
+            else:
+                sql_query += " LIMIT 1"
 
->>>>>>> Stashed changes
+        # ===============================
+        # 🔥 STEP 2: EXECUTE SQL
+        # ===============================
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
@@ -703,9 +661,8 @@ def chat():
         if not rows:
             return jsonify({"reply": []})
 
-<<<<<<< Updated upstream
         # ===============================
-        # 🔥 STEP 4: CLEAN RESULT (NO DUPLICATES)
+        # 🔥 REMOVE DUPLICATES
         # ===============================
         seen = set()
         clean_result = []
@@ -722,26 +679,10 @@ def chat():
         # 🔥 FINAL RESPONSE
         # ===============================
         return jsonify({"reply": clean_result})
-=======
-        # 🔥 REMOVE DUPLICATES (IMPORTANT FIX)
-        seen = set()
-        result = []
-
-        for row in rows:
-            obj = {columns[i]: row[i] for i in range(len(columns))}
-            
-            key = (obj.get("product_name"), obj.get("stockout_date"))
-            if key not in seen:
-                seen.add(key)
-                result.append(obj)
-
-        # 🔥 ONLY RETURN CLEAN DATA
-        return jsonify({"reply": result})
->>>>>>> Stashed changes
 
     except Exception as e:
         print("ERROR:", str(e))
-        return jsonify({"reply": f"Error: {str(e)}"})
+        return jsonify({"reply": f"⚠️ Error: {str(e)}"})
 
 
 
