@@ -613,7 +613,7 @@ def chat():
 
     try:
         # ===============================
-        # 🔥 STEP 1: GENERATE SQL (GEMINI)
+        # 🔥 STEP 1: GENERATE SQL
         # ===============================
         model = genai.GenerativeModel("gemini-3-flash-preview")
 
@@ -625,26 +625,31 @@ def chat():
         # ✅ CLEAN SQL
         sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
 
-        # ✅ KEEP ONLY SELECT
+        print("RAW SQL:", sql_query)
+
+        # ===============================
+        # ❌ INVALID CHECK
+        # ===============================
+        if "INVALID" in sql_query.upper():
+            return jsonify({
+                "reply": "⚠️ Please ask only stockout related questions"
+            })
+
+        # ===============================
+        # ✅ KEEP ONLY SELECT PART
+        # ===============================
         if "select" in sql_query.lower():
             sql_query = sql_query[sql_query.lower().find("select"):]
 
         print("FINAL SQL:", sql_query)
 
         # ===============================
-        # 🔥 SAFETY CHECK
+        # 🔒 SAFETY CHECK
         # ===============================
         if not sql_query.lower().startswith("select"):
             return jsonify({"reply": "⚠️ Invalid query"})
 
-        # ===============================
-        # 🔥 SMART LIMIT
-        # ===============================
-        if "limit" not in sql_query.lower():
-            if "order by" in sql_query.lower():
-                sql_query += " LIMIT 5"
-            else:
-                sql_query += " LIMIT 1"
+        # ❌ DO NOT FORCE LIMIT (IMPORTANT FIX)
 
         # ===============================
         # 🔥 STEP 2: EXECUTE SQL
@@ -662,23 +667,15 @@ def chat():
             return jsonify({"reply": []})
 
         # ===============================
-        # 🔥 REMOVE DUPLICATES
+        # 🔥 FORMAT RESULT (NO DUPLICATE FILTER)
         # ===============================
-        seen = set()
-        clean_result = []
+        result = []
 
         for row in rows:
             obj = {columns[i]: row[i] for i in range(len(columns))}
+            result.append(obj)
 
-            key = (obj.get("product_name"), obj.get("stockout_date"))
-            if key not in seen:
-                seen.add(key)
-                clean_result.append(obj)
-
-        # ===============================
-        # 🔥 FINAL RESPONSE
-        # ===============================
-        return jsonify({"reply": clean_result})
+        return jsonify({"reply": result})
 
     except Exception as e:
         print("ERROR:", str(e))
